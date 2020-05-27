@@ -15,7 +15,7 @@ const data = Mock.mock({
 
 export default [
   {
-    url: '/ddr/ae/run',
+    url: '/ddr/ae/tree',
     type: 'post',
     response: config => {
       console.log(config.body)

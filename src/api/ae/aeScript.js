@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function aeTreeData(data) {
+export function aeRun(data) {
   return request({
-    url: '/ddr/ae/tree',
+    url: '/ddr/ae/run',
     method: 'post',
     data
   })

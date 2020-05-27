@@ -4,11 +4,13 @@ import { param2Obj } from '../src/utils'
 import user from './user'
 import table from './table'
 import aeTree from './ae/aeTree'
+import aeScript from './ae/aeScript'
 
 const mocks = [
   ...user,
   ...table,
-  ...aeTree
+  ...aeTree,
+  ...aeScript
 ]
 
 // for front mock

@@ -5,12 +5,14 @@
     </el-aside>
 
     <el-main>
-      <el-row>
+      <el-row type="flex" align="top">
         <el-col :span="6">
-          <el-button>导入脚本</el-button>
+          <a-e-upload @treeChanged="updateAETree" />
+        </el-col>
+        <el-col :span="6">
           <el-button>保存</el-button>
         </el-col>
-        <el-col :span="3" :offset="15">
+        <el-col :span="3" :offset="12">
           <el-button @click="aeRun">执行</el-button>
         </el-col>
       </el-row>
@@ -24,9 +26,9 @@
       </el-row>
       <el-row>
         <el-table :data="tableData">
-          <el-table-column prop="date" label="日期" width="140" />
-          <el-table-column prop="name" label="姓名" width="120" />
-          <el-table-column prop="address" label="地址" />
+          <el-table-column prop="id" label="ID" width="140" />
+          <el-table-column prop="portfolioCode" label="代码" width="120" />
+          <el-table-column prop="portfolioName" label="名称" />
         </el-table>
       </el-row>
     </el-main>
@@ -35,33 +37,40 @@
 
 <script>
 import AETree from '@/components/ae/aeTree'
-import { aeRun as AERun } from '@/api/ae/aeTree'
+import AEUpload from '@/components/ae/aeUpload'
+import { aeTreeData } from '@/api/ae/aeTree'
+import { aeRun } from '@/api/ae/aeScript'
 
 export default {
   components: {
-    AETree
+    AETree,
+    AEUpload
   },
   data() {
-    const item = {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄'
-    }
     return {
-      tableData: Array(20).fill(item),
+      tableData: [],
       textarea: '',
       treeData: []
     }
   },
   created: function() {
-    this.aeRun()
+    this.initAETree()
   },
   methods: {
     // 执行结果，弄到tree上
-    aeRun() {
-      AERun({ sql: this.textarea }).then(response => {
+    initAETree() {
+      aeTreeData({ sql: this.textarea }).then(response => {
         this.treeData = response.data.treeData
       })
+    },
+    aeRun() {
+      aeRun({ sql: this.textarea }).then(response => {
+        this.tableData = response.data.tableData
+      })
+    },
+    updateAETree(e) {
+      console.log(e)
+      this.textarea = e.sql
     }
   }
 }
