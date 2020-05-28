@@ -1,9 +1,9 @@
 import Mock from 'mockjs'
 
 function getAEsql() {
-  return Mock.mock({
-    sql: 'select * from @sentence(1)'
-  })
+  return Mock.mock(
+    'select * from @sentence(1)'
+  )
 }
 
 function getTableData() {
@@ -16,6 +16,22 @@ function getTableData() {
   })
 }
 
+const tableHeaders = [
+  {
+    prop: 'id',
+    label: 'ID',
+    width: 140
+  }, {
+    prop: 'portfolioCode',
+    label: '代码',
+    width: 140
+  }, {
+    prop: 'portfolioName',
+    label: '名称',
+    width: 140
+  }
+]
+
 export default [
   {
     url: '/ddr/ae/run',
@@ -27,13 +43,14 @@ export default [
         code: 20000,
         data: {
           total: items.length,
-          tableData: items
+          tableData: items,
+          tableHeaders: tableHeaders
         }
       }
     }
   },
   {
-    url: '/ddr/ae/upload',
+    url: '/ddr/ae/save',
     type: 'post',
     req: config => {
       console.log(config.body)

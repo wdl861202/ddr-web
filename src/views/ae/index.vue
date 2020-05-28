@@ -10,7 +10,7 @@
           <a-e-upload @treeChanged="updateAETree" />
         </el-col>
         <el-col :span="6">
-          <el-button>保存</el-button>
+          <el-button @click="aeSave">保存</el-button>
         </el-col>
         <el-col :span="3" :offset="12">
           <el-button @click="aeRun">执行</el-button>
@@ -26,9 +26,7 @@
       </el-row>
       <el-row>
         <el-table :data="tableData">
-          <el-table-column prop="id" label="ID" width="140" />
-          <el-table-column prop="portfolioCode" label="代码" width="120" />
-          <el-table-column prop="portfolioName" label="名称" />
+          <el-table-column v-for="(tableHeader,index) in tableHeaders" :key="index" :label="tableHeader.label" :prop="tableHeader.prop" :width="tableHeader.width" />
         </el-table>
       </el-row>
     </el-main>
@@ -39,7 +37,7 @@
 import AETree from '@/components/ae/aeTree'
 import AEUpload from '@/components/ae/aeUpload'
 import { aeTreeData } from '@/api/ae/aeTree'
-import { aeRun } from '@/api/ae/aeScript'
+import { aeRun, aeSave } from '@/api/ae/aeScript'
 
 export default {
   components: {
@@ -50,7 +48,8 @@ export default {
     return {
       tableData: [],
       textarea: '',
-      treeData: []
+      treeData: [],
+      tableHeaders: []
     }
   },
   created: function() {
@@ -66,11 +65,19 @@ export default {
     aeRun() {
       aeRun({ sql: this.textarea }).then(response => {
         this.tableData = response.data.tableData
+        this.tableHeaders = response.data.tableHeaders
+        console.log(this.tableHeaders)
       })
     },
     updateAETree(e) {
       console.log(e)
-      this.textarea = e.sql
+      this.treeData = e.treeData
+    },
+    aeSave() {
+      aeSave({ sql: this.textarea }).then(response => {
+        console.log(response.data.sql)
+        this.textarea = response.data.sql
+      })
     }
   }
 }

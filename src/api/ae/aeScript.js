@@ -8,3 +8,11 @@ export function aeRun(data) {
   })
 }
 
+export function aeSave(data) {
+  return request({
+    url: '/ddr/ae/save',
+    method: 'post',
+    data
+  })
+}
+

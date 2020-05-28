@@ -8,3 +8,10 @@ export function aeTreeData(data) {
   })
 }
 
+export function aeUpload(data) {
+  return request({
+    url: '/ddr/ae/upload',
+    method: 'post',
+    data
+  })
+}

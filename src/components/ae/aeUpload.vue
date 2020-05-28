@@ -25,7 +25,7 @@ export default {
       this.fileList = fileList.slice(-3)
     },
     refreshTree(response, file, fileList) {
-      this.$emit('treeChanged', response.data.sql)
+      this.$emit('treeChanged', response.data)
     }
   }
 }
