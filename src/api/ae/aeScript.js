@@ -16,3 +16,11 @@ export function aeSave(data) {
   })
 }
 
+export function aeLoad(data) {
+  return request({
+    url: '/ddr/ae/load',
+    method: 'post',
+    data
+  })
+}
+

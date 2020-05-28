@@ -1,8 +1,8 @@
 import Mock from 'mockjs'
 
-function getAEsql() {
+function getAEsql(param) {
   return Mock.mock(
-    'select * from @sentence(1)'
+    param + ' : select * from @sentence(1)'
   )
 }
 
@@ -59,7 +59,22 @@ export default [
       return {
         code: 20000,
         data: {
-          sql: getAEsql()
+          sql: getAEsql('aeSave')
+        }
+      }
+    }
+  },
+  {
+    url: '/ddr/ae/load',
+    type: 'post',
+    req: config => {
+      console.log(config.body)
+    },
+    response: config => {
+      return {
+        code: 20000,
+        data: {
+          sql: getAEsql('aeLoad')
         }
       }
     }

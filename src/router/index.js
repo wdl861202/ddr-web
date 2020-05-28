@@ -6,6 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 import aeRouter from './modules/ae'
+import atRouter from './modules/at'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -33,6 +34,7 @@ import aeRouter from './modules/ae'
  */
 export const constantRoutes = [
   aeRouter,
+  atRouter,
   {
     path: '/login',
     component: () => import('@/views/login/index'),

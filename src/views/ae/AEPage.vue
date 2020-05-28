@@ -1,7 +1,7 @@
 <template>
   <el-container style="height: 100%; border: 1px solid #eee">
     <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <a-e-tree :tree-data="treeData" />
+      <a-e-tree :tree-data="treeData" @treeNodeClick="aeLoad" />
     </el-aside>
 
     <el-main>
@@ -34,10 +34,10 @@
 </template>
 
 <script>
-import AETree from '@/components/ae/aeTree'
-import AEUpload from '@/components/ae/aeUpload'
+import AETree from '@/components/ae/AETree'
+import AEUpload from '@/components/ae/AEUpload'
 import { aeTreeData } from '@/api/ae/aeTree'
-import { aeRun, aeSave } from '@/api/ae/aeScript'
+import { aeRun, aeSave, aeLoad } from '@/api/ae/aeScript'
 
 export default {
   components: {
@@ -66,16 +66,18 @@ export default {
       aeRun({ sql: this.textarea }).then(response => {
         this.tableData = response.data.tableData
         this.tableHeaders = response.data.tableHeaders
-        console.log(this.tableHeaders)
       })
     },
     updateAETree(e) {
-      console.log(e)
       this.treeData = e.treeData
     },
     aeSave() {
       aeSave({ sql: this.textarea }).then(response => {
-        console.log(response.data.sql)
+        this.textarea = response.data.sql
+      })
+    },
+    aeLoad(e) {
+      aeLoad({ id: e.id, label: e.label }).then(response => {
         this.textarea = response.data.sql
       })
     }

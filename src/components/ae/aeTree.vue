@@ -9,6 +9,7 @@
       :filter-node-method="filterNode"
       class="filter-tree"
       default-expand-all
+      @node-click="nodeClick"
     />
 
   </div>
@@ -41,6 +42,9 @@ export default {
     filterNode(value, data) {
       if (!value) return true
       return data.label.indexOf(value) !== -1
+    },
+    nodeClick(data, node, self) {
+      this.$emit('treeNodeClick', node)
     }
   }
 }
