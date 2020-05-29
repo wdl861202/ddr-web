@@ -10,6 +10,7 @@
     </el-col>
 
     <el-col :span="20">
+      <a-t-run-dlg :is-visible.sync="atRunDlgVisible" />
       <el-row type="flex" align="middle" :gutter="24">
         <el-col :span="4">
           模板模式
@@ -73,18 +74,24 @@
       </el-row>
     </el-col>
   </el-row>
+
 </template>
 
 <script>
 import AETree from '@/components/AE/AETree'
 import AEUpload from '@/components/AE/AEUpload'
 import { aeTreeData } from '@/api/ae/aeTree'
-import { aeRun, aeSave, aeLoad } from '@/api/ae/aeScript'
+import { aeSave, aeLoad } from '@/api/ae/aeScript'
+import ATRunDlg from './ATRunPage'
 
 export default {
   components: {
     AETree,
-    AEUpload
+    AEUpload,
+    ATRunDlg
+  },
+  props: {
+
   },
   data() {
     return {
@@ -105,7 +112,8 @@ export default {
       portCheckList: [],
       selfDefineLogic: '',
       forbidExport: '',
-      value: ''
+      value: '',
+      atRunDlgVisible: false
     }
   },
   created: function() {
@@ -119,10 +127,7 @@ export default {
       })
     },
     aeRun() {
-      aeRun({ sql: this.textarea }).then(response => {
-        this.tableData = response.data.tableData
-        this.tableHeaders = response.data.tableHeaders
-      })
+      this.atRunDlgVisible = true
     },
     updateAETree(e) {
       this.treeData = e.treeData
