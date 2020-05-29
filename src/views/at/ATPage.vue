@@ -1,42 +1,44 @@
 <template>
-  <el-container style="height: 100%; border: 1px solid #eee">
-    <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-      <el-row>
+  <el-row>
+    <el-col :span="4">
+      <el-row style="height:40%">
         <a-e-tree :tree-data="treeData" @treeNodeClick="aeLoad" />
       </el-row>
-      <el-row>
+      <el-row style="height:40%">
         <a-e-tree :tree-data="treeData" @treeNodeClick="aeLoad" />
       </el-row>
-    </el-aside>
+    </el-col>
 
-    <el-main>
-      <el-row type="flex" align="top">
-        <el-col :span="1">
+    <el-col :span="20">
+      <el-row type="flex" align="middle" :gutter="24">
+        <el-col :span="4">
           模板模式
         </el-col>
-        <el-col :span="2">
-          <el-radio v-model="radio" label="1">单组合时序</el-radio>
-          <el-radio v-model="radio" label="2">多组合时点</el-radio>
+        <el-col :span="10">
+          <el-checkbox-group v-model="portCheckList" :max="1">
+            <el-checkbox label="single">单组合时序</el-checkbox>
+            <el-checkbox label="multi">多组合时点</el-checkbox>
+          </el-checkbox-group>
         </el-col>
-        <el-col :span="1">
-          <el-radio v-model="radio" label="1">允许添加自定义逻辑关系</el-radio>
+        <el-col :span="5">
+          <el-checkbox v-model="selfDefineLogic" label="1">允许添加自定义逻辑关系</el-checkbox>
         </el-col>
-        <el-col :span="1">
-          <el-radio v-model="radio" label="1">禁止导出</el-radio>
-        </el-col>
-      </el-row>
-
-      <el-row>
-        <el-col :span="1">
-          <el-button @click="a">添加自定义参数</el-button>
+        <el-col :span="4">
+          <el-checkbox v-model="forbidExport" label="1">禁止导出</el-checkbox>
         </el-col>
       </el-row>
 
-      <el-row>
-        <el-col :span="1">
+      <el-row type="flex" align="middle" :gutter="24">
+        <el-col :span="4">
+          <el-button @click="addParam">添加自定义参数</el-button>
+        </el-col>
+      </el-row>
+
+      <el-row type="flex" align="middle" :gutter="24">
+        <el-col :span="4">
           自定义参数1
         </el-col>
-        <el-col :span="1">
+        <el-col :span="4">
           <el-select v-model="value" placeholder="请选择">
             <el-option
               v-for="item in options"
@@ -47,17 +49,17 @@
           </el-select>
         </el-col>
       </el-row>
-      <el-row type="flex" align="top">
-        <el-col :span="6">
+      <el-row type="flex" align="middle" :gutter="24">
+        <el-col :span="2">
           <a-e-upload @treeChanged="updateAETree" />
         </el-col>
-        <el-col :span="6">
+        <el-col :span="2">
           <el-button @click="aeSave">保存</el-button>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="2">
           <el-button @click="aeSave">提交审核</el-button>
         </el-col>
-        <el-col :span="3" :offset="6">
+        <el-col :span="3" :offset="12">
           <el-button @click="aeRun">执行</el-button>
         </el-col>
       </el-row>
@@ -69,13 +71,13 @@
           placeholder="请输入内容"
         />
       </el-row>
-    </el-main>
-  </el-container>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
-import AETree from '@/components/ae/AETree'
-import AEUpload from '@/components/ae/AEUpload'
+import AETree from '@/components/AE/AETree'
+import AEUpload from '@/components/AE/AEUpload'
 import { aeTreeData } from '@/api/ae/aeTree'
 import { aeRun, aeSave, aeLoad } from '@/api/ae/aeScript'
 
@@ -89,7 +91,21 @@ export default {
       tableData: [],
       textarea: '',
       treeData: [],
-      tableHeaders: []
+      tableHeaders: [],
+      options: [
+        {
+          value: 'value1',
+          label: '值1'
+        },
+        {
+          value: 'value2',
+          label: '值2'
+        }
+      ],
+      portCheckList: [],
+      selfDefineLogic: '',
+      forbidExport: '',
+      value: ''
     }
   },
   created: function() {
@@ -120,6 +136,9 @@ export default {
       aeLoad({ id: e.id, label: e.label }).then(response => {
         this.textarea = response.data.sql
       })
+    },
+    addParam() {
+
     }
   }
 }

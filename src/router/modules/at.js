@@ -6,6 +6,7 @@ const atRouter = {
   children: [
     {
       path: 'index',
+      name: 'AT',
       component: () => import('@/views/at/ATPage'),
       meta: { title: 'AT', icon: 'form' }
     }

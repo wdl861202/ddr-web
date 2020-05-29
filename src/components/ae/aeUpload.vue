@@ -10,7 +10,7 @@
     :on-success="refreshTree"
   >
     <el-button size="small" type="primary">导入脚本</el-button>
-    <div slot="tip" class="el-upload__tip">只能上传sql文件</div>
+    <!--<div slot="tip" class="el-upload__tip">只能上传sql文件</div>-->
   </el-upload>
 </template>
 <script>

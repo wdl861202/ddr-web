@@ -6,6 +6,7 @@ const aeRouter = {
   children: [
     {
       path: 'index',
+      name: 'AE',
       component: () => import('@/views/ae/AEPage'),
       meta: { title: 'AE', icon: 'form' }
     }
