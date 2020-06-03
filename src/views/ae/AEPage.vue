@@ -1,9 +1,9 @@
 <template>
-  <el-row type="flex">
-    <el-col :span="4">
+  <el-row type="flex" style="height:calc(100vh - 100px);">
+    <el-col :span="4" style="overflow:auto;">
       <a-e-tree :tree-data="treeData" @treeNodeClick="aeLoad" />
     </el-col>
-    <el-col :span="20">
+    <el-col :span="20" style="padding : 10px;overflow:auto;">
       <el-row :gutter="24">
         <el-row type="flex" align="top">
           <el-col :span="6">
@@ -12,7 +12,7 @@
           <el-col :span="6">
             <el-button @click="aeSave">保存</el-button>
           </el-col>
-          <el-col :span="3" :offset="12">
+          <el-col :span="3" :offset="11">
             <el-button @click="aeRun">执行</el-button>
           </el-col>
         </el-row>

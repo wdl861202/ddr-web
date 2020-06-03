@@ -35,22 +35,83 @@ const roles = [
   }
 ]
 
+const menus = [
+  {
+    path: '/ae',
+    component: 'Layout',
+    children: [
+      {
+        path: 'index',
+        name: 'AE',
+        component: 'AEPage',
+        meta: { title: 'AE', icon: 'form' }
+      }
+    ] },
+  {
+    path: '/at',
+    component: 'Layout',
+    children: [
+      {
+        path: 'index',
+        name: 'AT',
+        component: 'ATPage',
+        meta: { title: 'AT', icon: 'form' }
+      }
+    ]
+
+  },
+  {
+    path: '/example',
+    component: 'Layout',
+    redirect: '/example/table',
+    name: 'Example',
+    meta: { title: 'Example', icon: 'example' },
+    children: [
+      {
+        path: 'table',
+        name: 'Table',
+        component: 'Table',
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: 'Tree',
+        meta: { title: 'Tree', icon: 'tree' }
+      }
+    ]
+  },
+
+  {
+    path: '/form',
+    component: 'Layout',
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: 'Form',
+        meta: { title: 'Form', icon: 'form' }
+      }
+    ]
+  }
+]
+
 export default [
   // mock get all routes form server
   {
-    url: '/vue-element-admin/routes',
-    type: 'get',
+    url: '/ddr/routers',
+    type: 'post',
     response: _ => {
       return {
         code: 20000,
-        data: routes
+        data: menus
       }
     }
   },
 
   // mock get all roles form server
   {
-    url: '/vue-element-admin/roles',
+    url: '/ddr/roles',
     type: 'get',
     response: _ => {
       return {
@@ -62,7 +123,7 @@ export default [
 
   // add role
   {
-    url: '/vue-element-admin/role',
+    url: '/ddr/role',
     type: 'post',
     response: {
       code: 20000,
@@ -74,7 +135,7 @@ export default [
 
   // update role
   {
-    url: '/vue-element-admin/role/[A-Za-z0-9]',
+    url: '/ddr/role/[A-Za-z0-9]',
     type: 'put',
     response: {
       code: 20000,
@@ -86,7 +147,7 @@ export default [
 
   // delete role
   {
-    url: '/vue-element-admin/role/[A-Za-z0-9]',
+    url: '/ddr/role/[A-Za-z0-9]',
     type: 'delete',
     response: {
       code: 20000,

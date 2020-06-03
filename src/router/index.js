@@ -33,6 +33,7 @@ import atRouter from './modules/at'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+
 export const constantRoutes = [
   {
     path: '/login',
@@ -170,10 +171,50 @@ export const constantRoutes = [
 export const asyncRoutes = [
 ]
 
+export const asyncRouterMap = {
+  Layout: Layout,
+  AEPage: () => import('@/views/ae/AEPage'),
+  ATPage: () => import('@/views/at/ATPage'),
+  Table: () => import('@/views/table/index'),
+  Tree: () => import('@/views/tree/index'),
+  From: () => import('@/views/form/index')
+}
+
+export const baseRoutes = [
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+
+  {
+    path: '/404',
+    component: () => import('@/views/404'),
+    hidden: true
+  },
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/dashboard/index'),
+      meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+    }]
+  }
+]
+
+export const component404 = [
+  // 404 page must be placed at the end !!!
+  { path: '*', redirect: '/404', hidden: true }
+]
+
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: baseRoutes
 })
 
 const router = createRouter()

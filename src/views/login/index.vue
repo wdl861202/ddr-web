@@ -112,6 +112,8 @@ export default {
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
+          }).then(() => {
+            this.$store.dispatch('permission/getRouters')
           }).catch(() => {
             this.loading = false
           })

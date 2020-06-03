@@ -1,16 +1,15 @@
 <template>
-  <el-row>
+  <el-row type="flex" style="height:calc(100vh);">
     <el-col :span="4">
-      <el-row style="height:40%">
+      <el-row style="height:40%;display: flex;overflow:auto;">
         <a-e-tree :tree-data="treeData" @treeNodeClick="aeLoad" />
       </el-row>
-      <el-row style="height:40%">
+      <el-row style="height:40%;display: flex;overflow:auto;">
         <a-e-tree :tree-data="treeData" @treeNodeClick="aeLoad" />
       </el-row>
     </el-col>
 
     <el-col :span="20">
-      <a-t-run-dlg :is-visible.sync="atRunDlgVisible" />
       <el-row type="flex" align="middle" :gutter="24">
         <el-col :span="4">
           模板模式
@@ -31,6 +30,7 @@
 
       <el-row type="flex" align="middle" :gutter="24">
         <el-col :span="4">
+          <a-t-self-defined-param-dlg :is-visible.sync="atSelfDefinedParamDlgVisible" />
           <el-button @click="addParam">添加自定义参数</el-button>
         </el-col>
       </el-row>
@@ -50,6 +50,7 @@
           </el-select>
         </el-col>
       </el-row>
+
       <el-row type="flex" align="middle" :gutter="24">
         <el-col :span="2">
           <a-e-upload @treeChanged="updateAETree" />
@@ -61,6 +62,7 @@
           <el-button @click="aeSave">提交审核</el-button>
         </el-col>
         <el-col :span="3" :offset="12">
+          <a-t-run-dlg :is-visible.sync="atRunDlgVisible" :port-check-values.sync="portCheckList" />
           <el-button @click="aeRun">执行</el-button>
         </el-col>
       </el-row>
@@ -68,7 +70,7 @@
         <el-input
           v-model="textarea"
           type="textarea"
-          :rows="30"
+          :rows="28"
           placeholder="请输入内容"
         />
       </el-row>
@@ -83,12 +85,14 @@ import AEUpload from '@/components/AE/AEUpload'
 import { aeTreeData } from '@/api/ae/aeTree'
 import { aeSave, aeLoad } from '@/api/ae/aeScript'
 import ATRunDlg from './ATRunPage'
+import ATSelfDefinedParamDlg from './ATSelfDefinedParamPage'
 
 export default {
   components: {
     AETree,
     AEUpload,
-    ATRunDlg
+    ATRunDlg,
+    ATSelfDefinedParamDlg
   },
   props: {
 
@@ -113,7 +117,8 @@ export default {
       selfDefineLogic: '',
       forbidExport: '',
       value: '',
-      atRunDlgVisible: false
+      atRunDlgVisible: false,
+      atSelfDefinedParamDlgVisible: false
     }
   },
   created: function() {
@@ -143,7 +148,7 @@ export default {
       })
     },
     addParam() {
-
+      this.atSelfDefinedParamDlgVisible = true
     }
   }
 }

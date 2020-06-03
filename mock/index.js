@@ -5,12 +5,14 @@ import user from './user'
 import table from './table'
 import aeTree from './ae/aeTree'
 import aeScript from './ae/aeScript'
+import routers from './role/index'
 
 const mocks = [
   ...user,
   ...table,
   ...aeTree,
-  ...aeScript
+  ...aeScript,
+  ...routers
 ]
 
 // for front mock
