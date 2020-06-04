@@ -28,6 +28,7 @@
           <el-table :data="tableData">
             <el-table-column v-for="(tableHeader,index) in tableHeaders" :key="index" :label="tableHeader.label" :prop="tableHeader.prop" :width="tableHeader.width" />
           </el-table>
+          <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
         </el-row>
       </el-row>
     </el-col>
@@ -39,18 +40,30 @@ import AETree from '@/components/AE/AETree'
 import AEUpload from '@/components/AE/AEUpload'
 import { aeTreeData } from '@/api/ae/aeTree'
 import { aeRun, aeSave, aeLoad } from '@/api/ae/aeScript'
+import Pagination from '@/components/Pagination'
 
 export default {
   components: {
     AETree,
-    AEUpload
+    AEUpload,
+    Pagination
   },
   data() {
     return {
       tableData: [],
       textarea: '',
       treeData: [],
-      tableHeaders: []
+      tableHeaders: [],
+      total: 0,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 20,
+        importance: undefined,
+        title: undefined,
+        type: undefined,
+        sort: '+id'
+      }
     }
   },
   created: function() {
@@ -67,6 +80,7 @@ export default {
       aeRun({ sql: this.textarea }).then(response => {
         this.tableData = response.data.tableData
         this.tableHeaders = response.data.tableHeaders
+        this.total = response.data.total
       })
     },
     updateAETree(e) {
@@ -80,6 +94,19 @@ export default {
     aeLoad(e) {
       aeLoad({ id: e.id, label: e.label }).then(response => {
         this.textarea = response.data.sql
+      })
+    },
+    getList() {
+      this.listLoading = true
+      aeRun(this.listQuery).then(response => {
+        this.tableData = response.data.tableData
+        this.tableHeaders = response.data.tableHeaders
+        this.total = response.data.total
+
+        // Just to simulate the time of the request
+        setTimeout(() => {
+          this.listLoading = false
+        }, 1.5 * 1000)
       })
     }
   }
